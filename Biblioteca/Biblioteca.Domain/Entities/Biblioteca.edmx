@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BibliotecaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Genero">
+          <Key>
+            <PropertyRef Name="GeneroID" />
+          </Key>
+          <Property Name="GeneroID" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Libro">
+          <Key>
+            <PropertyRef Name="LibroID" />
+          </Key>
+          <Property Name="LibroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Autor" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="GeneroID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Libro_Genero">
+          <End Role="Genero" Type="Self.Genero" Multiplicity="1" />
+          <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genero">
+              <PropertyRef Name="GeneroID" />
+            </Principal>
+            <Dependent Role="Libro">
+              <PropertyRef Name="GeneroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BibliotecaModelStoreContainer">
+          <EntitySet Name="Genero" EntityType="Self.Genero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Libro_Genero" Association="Self.FK_Libro_Genero">
+            <End Role="Genero" EntitySet="Genero" />
+            <End Role="Libro" EntitySet="Libro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BibliotecaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Genero">
+          <Key>
+            <PropertyRef Name="GeneroID" />
+          </Key>
+          <Property Name="GeneroID" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Libro" Relationship="Self.FK_Libro_Genero" FromRole="Genero" ToRole="Libro" />
+        </EntityType>
+        <EntityType Name="Libro">
+          <Key>
+            <PropertyRef Name="LibroID" />
+          </Key>
+          <Property Name="LibroID" Type="Int32" Nullable="false" />
+          <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Autor" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GeneroID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Genero" Relationship="Self.FK_Libro_Genero" FromRole="Libro" ToRole="Genero" />
+        </EntityType>
+        <Association Name="FK_Libro_Genero">
+          <End Role="Genero" Type="Self.Genero" Multiplicity="1" />
+          <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genero">
+              <PropertyRef Name="GeneroID" />
+            </Principal>
+            <Dependent Role="Libro">
+              <PropertyRef Name="GeneroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BibliotecaContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Genero" EntityType="Self.Genero" />
+          <EntitySet Name="Libro" EntityType="Self.Libro" />
+          <AssociationSet Name="FK_Libro_Genero" Association="Self.FK_Libro_Genero">
+            <End Role="Genero" EntitySet="Genero" />
+            <End Role="Libro" EntitySet="Libro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BibliotecaModelStoreContainer" CdmEntityContainer="BibliotecaContext">
+          <EntitySetMapping Name="Genero">
+            <EntityTypeMapping TypeName="BibliotecaModel.Genero">
+              <MappingFragment StoreEntitySet="Genero">
+                <ScalarProperty Name="GeneroID" ColumnName="GeneroID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Libro">
+            <EntityTypeMapping TypeName="BibliotecaModel.Libro">
+              <MappingFragment StoreEntitySet="Libro">
+                <ScalarProperty Name="LibroID" ColumnName="LibroID" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Autor" ColumnName="Autor" />
+                <ScalarProperty Name="GeneroID" ColumnName="GeneroID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
